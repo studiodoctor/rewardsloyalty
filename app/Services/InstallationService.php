@@ -105,17 +105,14 @@ class InstallationService
         $all['APP_DEBUG'] = 'false';
         $all['APP_ENV'] = 'production';
 
-        // Handle demo mode - set both env-like variables AND config (config is cached at boot)
+        // Handle demo mode - set both env AND config (config is cached at boot)
         if (isset($all['APP_DEMO']) && $all['APP_DEMO'] === 'true') {
+            putenv('APP_DEMO=true');
+            putenv('APP_IS_UNEDITABLE=false');
             config(['default.app_demo' => true]);
-            $_ENV['APP_DEMO'] = 'true';
-            $_SERVER['APP_DEMO'] = 'true';
-            $_ENV['APP_IS_UNEDITABLE'] = 'false';
-            $_SERVER['APP_IS_UNEDITABLE'] = 'false';
         } else {
+            putenv('APP_DEMO=false');
             config(['default.app_demo' => false]);
-            $_ENV['APP_DEMO'] = 'false';
-            $_SERVER['APP_DEMO'] = 'false';
         }
 
         // Handle mail configuration based on driver
@@ -138,9 +135,7 @@ class InstallationService
         $new_env = $this->appendNewEnvVariables($new_env, $all);
 
         // Override database config before migrating and seeding db
-        config(['app.env' => 'development']);
-        $_ENV['APP_ENV'] = 'development';
-        $_SERVER['APP_ENV'] = 'development';
+        putenv('APP_ENV=development');
 
         config([
             'app.env' => 'development',
