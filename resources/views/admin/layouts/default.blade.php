@@ -391,11 +391,11 @@ Base layout for admin pages including authentication and dashboard
                                 <div class="h-px bg-secondary-200 dark:bg-secondary-800"></div>
                             </div>
                             
-                            {{-- License & Updates --}}
+                            <!-- {{-- License & Updates --}}
                             <x-ui.nav-link :href="route('admin.license.index')"
                                 :active="Str::startsWith($routeName, 'admin.license')" icon="shield-check">
                                 {{ trans('common.license.title') }}
-                            </x-ui.nav-link>
+                            </x-ui.nav-link> -->
                             
                             {{-- Settings --}}
                             <x-ui.nav-link :href="route('admin.settings.index')"
